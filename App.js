@@ -16,11 +16,12 @@ class App extends Component {
         this.state = {
 
             textoFrase: 'Quebre o biscoito e veja sua sorte',
-            img: require('./src/biscoito.png')
+            img: require('./src/biscoito.png'),
+            txtBotton: 'Quebrar Biscoito',
         };
 
         this.quebrarBiscoito = this.quebrarBiscoito.bind(this);
-        this.novoBiscoito = this.novoBiscoito.bind(this);
+        
 
         this.frases = [
 
@@ -37,49 +38,65 @@ class App extends Component {
     quebrarBiscoito(){
 
         let numeroAleatorio = Math.floor(Math.random() * this.frases.length)
+            
+            if(this.state.txtBotton == 'Quebrar Biscoito'){
+                
+                this.setState({
+                txtBotton: 'Novo Biscoito',
+                textoFrase: this.frases[numeroAleatorio],
+                img: require('./src/biscoitoAberto.png')
 
-        this.setState({
-            textoFrase: this.frases[numeroAleatorio],
-            img: require('./src/biscoitoAberto.png')
-        })
+            })
 
-    }
+            }else{
 
-    novoBiscoito(){
-        this.setState({
+                this.setState({
+                    textoFrase: 'Quebre o biscoito e veja sua sorte',
+                    img: require('./src/biscoito.png'),
+                    txtBotton: 'Quebrar Biscoito'
+                })
+            }
+            ;
+        
 
-            textoFrase: 'Quebre o biscoito e veja sua sorte',
-            img: require('./src/biscoito.png')
-        })
-    }
+    };
+
+    
+    
 
     render() {
         return (
             <View style={styles.container}>
-
                 <Image
                     style={styles.img}
                     source={this.state.img}                   
                 />
 
-                <Text style={styles.txt}>{this.state.textoFrase}</Text>
+                <Text style={styles.txt}>{this.state.textoFrase}</Text> 
 
-                <TouchableOpacity style={styles.btn} onPress={this.quebrarBiscoito}>
+                <TouchableOpacity 
+                style={styles.btn} 
+                onPress={this.quebrarBiscoito}>
+
                     <View style={styles.btnArea}>
-                        <Text style={styles.btntext}>Quebrar biscoito</Text>
+
+                        <Text style={styles.btntext}>
+                            {this.state.txtBotton}
+                        </Text>
+
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btn} onPress={this.novoBiscoito}>
-                    <View style={styles.btnArea}>
-                        <Text style={styles.btntext}>Novo Biscoito</Text>
-                    </View>
-                </TouchableOpacity>
-   
             </View>
-        )
-    }
-}
+        
+    )};
+
+}    
+
+
+
+
+
 const styles= StyleSheet.create({
     container:{
         flex:1,
